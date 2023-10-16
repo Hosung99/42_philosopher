@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:33:57 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/12 19:41:06 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/14 15:12:14 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	thread_join(t_data *data, t_philo *philo)
 	{
 		if (pthread_join(philo[index].thread, NULL))
 		{
-			free_data_philo(philo->data, philo);
 			free_mutex_last_eat_time(philo->data->argv_info.philo_num - 1, \
 				philo->data);
+			free_data_philo(philo->data, philo);
 			return (ERROR);
 		}
 		index++;

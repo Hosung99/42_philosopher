@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:31:00 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/14 13:19:33 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/14 16:20:52 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	start_dining(t_data *data, t_philo *philo)
 		if (pthread_create(&philo[index].thread, NULL, (void *)dining, \
 			(void *)&philo[index]))
 		{
-			free_data_philo(data, philo);
 			free_mutex_last_eat_time(data->argv_info.philo_num - 1, data);
+			free_data_philo(data, philo);
 			printf("Error: Thread create failed\n");
 			return (ERROR);
 		}
@@ -38,8 +38,7 @@ void	*dining(t_philo *philo)
 
 	gettimeofday(&time, NULL);
 	pthread_mutex_lock(&philo->data->last_eat_time[philo->id]);
-	philo->last_eat_time = philo->data->start_time - time.tv_sec * 1000 \
-		- time.tv_usec / 1000;
+	philo->last_eat_time = get_current_time(philo->data);
 	pthread_mutex_unlock(&philo->data->last_eat_time[philo->id]);
 	if (philo->id % 2 == 1)
 		usleep(odd_sleep(philo));
@@ -125,8 +124,8 @@ int	main(int argc, char *argv[])
 	monitoring(&data, philo);
 	if (thread_join(&data, philo) == ERROR)
 		return (ERROR);
-	free_data_philo(philo->data, philo);
 	free_mutex_last_eat_time(philo->data->argv_info.philo_num - 1, \
 				philo->data);
+	free_data_philo(philo->data, philo);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:57:24 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/14 13:17:42 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/14 17:30:08 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	sleep_tight(t_philo *philo, int time)
 			return (ERROR);
 		}
 		pthread_mutex_unlock(&philo->data->fork_print);
-		usleep(100);
+		usleep(200);
 	}
 	return (SUCCESS);
 }
